@@ -1,0 +1,30 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: mycluster1
+  region: ap-south-1
+
+nodeGroups:
+  - name: ng-1
+    instanceType: t2.micro
+    desiredCapacity: 2
+    ssh:
+      publicKeyName: my1key
+  - name: ng-2
+    instanceType: t2.small
+    desiredCapacity: 1
+    ssh:
+      publicKeyPath: my1key
+  - name: ng-mixed
+    minSize: 2
+    maxSize: 5
+    instancesDistribution:
+      maxPrice: 0.017
+      instanceTypes: ["t3.small","t3.medium"]
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 50
+      spotInstancePools: 2
+    ssh:
+      publicKeyName: my1key
+
